@@ -30,7 +30,7 @@ func _input(event: InputEvent):
 			last_movements.push_back(-event.relative.y)
 			if len(last_movements) > 5:
 				last_movements.pop_front()
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and !event.is_pressed():
 		print(last_movements)
 		var amp = last_movements.max()
 		var direction = ball.translation.normalized() # Relative to rotation point
