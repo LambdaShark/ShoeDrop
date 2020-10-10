@@ -5,12 +5,6 @@ export onready var mouse_sensitivity : float = 0.2
 export onready var throw_sensitivity : float = 0.01
 const TO_RAD = TAU / 90
 
-onready var ball = $Hand/Ball
-
-func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	ball.mode = RigidBody.MODE_KINEMATIC
-
 enum State {
 	THROWING,
 	MOVING
@@ -18,6 +12,12 @@ enum State {
 
 var state = State.THROWING
 var last_movements = [0]
+onready var hand = $Head/Hand
+onready var ball = $Head/Hand/Ball
+
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	ball.mode = RigidBody.MODE_KINEMATIC
 
 func _input(event: InputEvent):
 	if event is InputEventMouseMotion:
@@ -25,15 +25,14 @@ func _input(event: InputEvent):
 			$Head.rotation_degrees -= Vector3(event.relative.y, event.relative.x,0) * mouse_sensitivity
 			$Head.rotation.x = clamp($Head.rotation.x, -TAU/8, TAU/8)
 		if state == State.THROWING:
-			$Hand.rotate_object_local(Vector3(1,0,0),-event.relative.y * throw_sensitivity)
-			$Hand.rotation.x = clamp($Hand.rotation.x, -TAU/8, TAU/16)
+			hand.rotate_object_local(Vector3(1,0,0),-event.relative.y * throw_sensitivity)
+			hand.rotation.x = clamp(hand.rotation.x, -TAU/8, TAU/10)
 			last_movements.push_back(-event.relative.y)
 			if len(last_movements) > 5:
 				last_movements.pop_front()
-			# $BallRotationPoint.rotate_object_local(Vector3(0,1,0),-event.relative.x * throw_sensitivity)
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.is_pressed():
 		print(last_movements)
-		var amp = mean(last_movements)
+		var amp = last_movements.max()
 		var direction = ball.translation.normalized() # Relative to rotation point
 		release_ball(event, amp*direction)
 
@@ -63,3 +62,10 @@ func release_ball(event:InputEventMouseButton, speed: Vector3):
 func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if Input.is_action_just_pressed("ui_accept"):
+		if state == State.MOVING:
+			state = State.THROWING
+		else:
+			state = State.MOVING
+	if Input.is_action_just_pressed("up"):
+		move_and_slide($Head.rotation * 5)

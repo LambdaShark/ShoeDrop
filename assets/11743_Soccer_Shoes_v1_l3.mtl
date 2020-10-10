@@ -1,0 +1,16 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 30.11.2011 11:07:03
+
+newmtl soccer_shoes
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0900 0.0900 0.0900
+	Ke 0.0000 0.0000 0.0000
+	map_Ka soccer_shoes.jpg
+	map_Kd soccer_shoes.jpg

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/shoes.obj-8b361e31e868f9cfec85481640653281.mesh"
+
+[deps]
+
+files=[ "res://.import/shoes.obj-8b361e31e868f9cfec85481640653281.mesh" ]
+
+source_file="res://assets/shoes.obj"
+dest_files=[ "res://.import/shoes.obj-8b361e31e868f9cfec85481640653281.mesh", "res://.import/shoes.obj-8b361e31e868f9cfec85481640653281.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
